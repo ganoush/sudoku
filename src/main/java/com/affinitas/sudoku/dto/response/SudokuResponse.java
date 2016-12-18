@@ -1,25 +1,14 @@
 package com.affinitas.sudoku.dto.response;
 
+import com.affinitas.sudoku.dto.ValidationResult;
+
 /**
  * Created by ganeshnagarajan on 12/17/16.
  */
-public class SudokuResponse {
-    private boolean isValidMove;
-    private boolean isSudokuComplete;
+public class SudokuResponse extends ValidationResult{
 
-    public boolean isValidMove() {
-        return isValidMove;
-    }
-
-    public void setValidMove(boolean validMove) {
-        isValidMove = validMove;
-    }
-
-    public boolean isSudokuComplete() {
-        return isSudokuComplete;
-    }
-
-    public void setSudokuComplete(boolean sudokuComplete) {
-        isSudokuComplete = sudokuComplete;
+    @Override
+    public String toString(){
+        return super.toString();
     }
 }
