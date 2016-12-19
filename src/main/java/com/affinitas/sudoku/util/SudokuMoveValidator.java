@@ -45,17 +45,39 @@ public class SudokuMoveValidator {
 
                 /*Validate the i th column*/
                 validationCount = validationCount + validateGrid(sudokuBoard[i], GridType.COLUMN, j, validationMessages);
-
                 rowGrid[j] = sudokuBoard[j][i];
-                if (!isValidNumber(rowGrid[j])) {
-                    log.error("Invalid sudoku entry at Row: " + j + " , Column: " + i + " , value: " + rowGrid[j]);
-                    throw new SudokuException("Invalid sudoku entry at Row: " + j + " , Column: " + i + " , value: " + rowGrid[j]);
-                }
             }
 
             validationCount = validationCount + validateGrid(rowGrid, GridType.ROW, i, validationMessages);
         }
 
+        /*Validate 3x3 grid here*/
+        int boxCount = 0; int row = 0; int column = 0; int count = 0;
+        int[] grid = new int[sudokuBoard.length];
+        while (boxCount < sudokuBoard.length){
+            grid[count] = sudokuBoard[row][column];
+            column++;
+            if (column%3 == 0) {
+                row++;
+            }
+            if (row%3 == 0) {
+                column = column+3;
+            }
+            count++;
+            if (count == sudokuBoard.length) {
+                validationCount = validationCount + validateGrid(grid, GridType.BOX, boxCount, validationMessages);
+                boxCount++;
+                count = 0;
+            }
+            if (boxCount%3 == 0){
+                row = row +3;
+                column = column - 9;
+            }
+        }
+
+        result.setValidationMessages(validationMessages);
+        result.setValidMove(validationMessages.size() == 0);
+        result.setSudokuComplete(validationCount == 27 && validationMessages.size() == 0);
         return result;
     }
 

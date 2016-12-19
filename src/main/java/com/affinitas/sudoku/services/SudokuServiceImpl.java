@@ -18,7 +18,7 @@ public class SudokuServiceImpl implements SudokuService {
 
     private static final Logger log = LoggerFactory.getLogger(SudokuMoveValidator.class);
 
-    static final int[][] sudokuBoard = new int[][]{
+    public static final int[][] SUDOKU_BOARD = new int[][]{
             {7,0,0,0,4,0,5,3,0},
             {0,0,5,0,0,8,0,1,0},
             {0,0,8,5,0,9,0,4,0},
@@ -37,7 +37,7 @@ public class SudokuServiceImpl implements SudokuService {
 
     @Override
     public int[][] loadSudokuBoard() {
-        return sudokuBoard;
+        return SUDOKU_BOARD;
     }
 
     /**
