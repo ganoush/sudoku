@@ -42,12 +42,11 @@ public class SudokuMoveValidator {
                     log.error("Invalid sudoku entry at Row: " + i + " , Column: " + j + " , value: " + sudokuBoard[i][j]);
                     throw new SudokuException("Invalid sudoku entry at Row: " + i + " , Column: " + j + " , value: " + sudokuBoard[i][j]);
                 }
-
-                /*Validate the i th column*/
-                validationCount = validationCount + validateGrid(sudokuBoard[i], GridType.COLUMN, j, validationMessages);
                 rowGrid[j] = sudokuBoard[j][i];
             }
 
+            /*Validate the i th column*/
+            validationCount = validationCount + validateGrid(sudokuBoard[i], GridType.COLUMN, i, validationMessages);
             validationCount = validationCount + validateGrid(rowGrid, GridType.ROW, i, validationMessages);
         }
 
@@ -58,20 +57,20 @@ public class SudokuMoveValidator {
             grid[count] = sudokuBoard[row][column];
             column++;
             if (column%3 == 0) {
+                column = column - 3;
                 row++;
-            }
-            if (row%3 == 0) {
-                column = column+3;
             }
             count++;
             if (count == sudokuBoard.length) {
                 validationCount = validationCount + validateGrid(grid, GridType.BOX, boxCount, validationMessages);
                 boxCount++;
+                row = row -3;
+                column = column + 3;
                 count = 0;
             }
-            if (boxCount%3 == 0){
+            if (boxCount != 0 && count == 0 && boxCount%3 == 0){
                 row = row +3;
-                column = column - 9;
+                column = 0;
             }
         }
 

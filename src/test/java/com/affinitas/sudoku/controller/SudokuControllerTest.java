@@ -73,4 +73,18 @@ public class SudokuControllerTest {
                 .andExpect(jsonPath("$.sudokuComplete").value(false))
                 .andExpect(jsonPath("$.validMove").value(false));
     }
+
+    @Test
+    public void testSudokuCompleteMove() throws Exception{
+        SudokuMoveRequest request = new SudokuMoveRequest();
+        request.setSudokuBoard(SudokuTestUtils.SUDOKU_FINISH);
+        request.setMoveColumn(0);
+        request.setMoveRow(0);
+        request.setMoveValue(5);
+        this.mockMvc.perform(put("/sudoku/validateMove").contentType(SudokuTestUtils.SUDOKU_REQUEST_JSON_TYPE).content(SudokuTestUtils.asJsonString(request)))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.sudokuComplete").value(true))
+                .andExpect(jsonPath("$.validMove").value(true));
+    }
 }
