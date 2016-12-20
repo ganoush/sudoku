@@ -61,7 +61,7 @@ public class SudokuController {
         SudokuMoveResponse response = new SudokuMoveResponse();
         response.setSudokuComplete(result.isSudokuComplete());
         response.setValidMove(result.isValidMove());
-
+        response.setValidationMessages(result.getValidationMessages());
         log.info("Response to validate Sudoku Move " + response);
         return response;
     }
