@@ -2,16 +2,26 @@
  * Created by ganeshnagarajan on 12/19/16.
  */
 Sudoku.controller('SudokuController', function SudokuController($scope, SudokuService) {
-    $scope.sudokuBoard = '';
+    $scope.sudokuBoard = [[]];
     $scope.messages = '';
     $scope.loadBoard = function(){
         SudokuService.loadBoard().success(function(response){
             $scope.sudokuBoard = response.sudokuBoard;
-            //$scope.messages = 'Sudoku Board loaded successfully!';
+            $scope.messages = '';
         });
     };
     $scope.validateMove = function(row, cols, value){
-        //console.log(value);
-        //Invoke the put service to validate move and shovel the error messages to messages scope
+        if (value && !isNaN(value) && angular.isNumber(+value) && value <= 9 && value >= 0) {
+            $scope.messages = [];
+            var sudokueMoveRequest = { sudokuBoard: $scope.sudokuBoard, moveRow: row, moveColumn: cols, moveValue: value };
+            SudokuService.validateMove(sudokueMoveRequest).success(function(response){
+                $scope.messages = response.validationMessages;
+                if (response.sudokuComplete) {
+                    $scope.messages = ['Sudoku Completed'];
+                }
+            });
+        } else {
+            $scope.messages = ['Enter a valid value at row ' + row + ' column ' + cols];
+        }
     };
 });

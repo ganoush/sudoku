@@ -45,9 +45,9 @@ public class SudokuMoveValidator {
                 rowGrid[j] = sudokuBoard[j][i];
             }
 
+            validationCount = validationCount + validateGrid(sudokuBoard[i], GridType.ROW, i, validationMessages);
             /*Validate the i th column*/
-            validationCount = validationCount + validateGrid(sudokuBoard[i], GridType.COLUMN, i, validationMessages);
-            validationCount = validationCount + validateGrid(rowGrid, GridType.ROW, i, validationMessages);
+            validationCount = validationCount + validateGrid(rowGrid, GridType.COLUMN, i, validationMessages);
         }
 
         /*Validate 3x3 grid here*/
