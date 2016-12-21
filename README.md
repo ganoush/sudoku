@@ -8,3 +8,6 @@ Application uses Java 8 features wherever possible.
 springboot creates a (tomcat) container at a defalt port.
 UI files are placed under resources/static folder.
 UI is created using angular js. 
+
+
+Post deployment the url to load the application is : http://localhost:8080/index.html
