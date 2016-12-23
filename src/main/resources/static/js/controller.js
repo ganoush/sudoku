@@ -3,9 +3,11 @@
  */
 Sudoku.controller('SudokuController', function SudokuController($scope, SudokuService) {
     $scope.sudokuBoard = [[]];
-    $scope.messages = '';
+    $scope.initialLoad = [[]];
+    $scope.messages = '';//ng-disabled="initialLoad[$parent.$index][$index] != 0"
     $scope.loadBoard = function(){
         SudokuService.loadBoard().success(function(response){
+            $scope.initialLoad = JSON.parse(JSON.stringify(response.sudokuBoard));
             $scope.sudokuBoard = response.sudokuBoard;
             $scope.messages = '';
         });

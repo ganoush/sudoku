@@ -9,7 +9,7 @@ describe('controller', function () {
 
     var sudokuLoadResponse = {
         success: function (func) {
-            func({ sudokuBoard: [[1],[2]], validMove: true, sudokuComplete: true});
+            func({ sudokuBoard: [[1,0],[2,1]], validMove: true, sudokuComplete: true});
         }
     };
 
@@ -33,9 +33,6 @@ describe('controller', function () {
              $controller('SudokuController', { $scope: $scope, SudokuService: sudokuServiceMock } );
              $scope.loadBoard();
              expect($scope.sudokuBoard.length).toEqual(2);
-             $scope.validateMove(1,2,3);
-             expect($scope.messages.length).toEqual(1);
-             expect($scope.messages[0]).toEqual('Please enter a valid number');
          });
     });
 
