@@ -6,6 +6,7 @@ import com.affinitas.sudoku.dto.ValidationResult;
 import com.affinitas.sudoku.util.SudokuMoveValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 /**
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
  *
  *  Service class to load the default board & validate the sudoku move
  */
+@Scope("singleton")
 @Service
 public class SudokuServiceImpl implements SudokuService {
 
