@@ -1,13 +1,14 @@
 package com.affinitas.sudoku.controller;
 
 import com.affinitas.sudoku.SudokuApplicationRunner;
+import com.affinitas.sudoku.SudokuTestUtils;
 import com.affinitas.sudoku.dto.request.SudokuMoveRequest;
 import com.affinitas.sudoku.services.SudokuServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
@@ -24,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Created by ganeshnagarajan on 12/18/16.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = SudokuApplicationRunner.class)
+@ContextConfiguration(classes = SudokuApplicationRunner.class)
 @WebAppConfiguration
 public class SudokuControllerTest {
     @Autowired
@@ -38,7 +39,7 @@ public class SudokuControllerTest {
     }
 
     @Test
-    public void testLoadTable() throws Exception{
+    public void shouldLoadTable() throws Exception{
         this.mockMvc.perform(get("/sudoku/loadBoard"))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -46,7 +47,7 @@ public class SudokuControllerTest {
     }
 
     @Test
-    public void testValidSudokuMove() throws Exception{
+    public void shouldTestValidMove() throws Exception{
         /*Create a dummy request */
         SudokuMoveRequest request = new SudokuMoveRequest();
         request.setSudokuBoard(SudokuServiceImpl.SUDOKU_BOARD);
@@ -61,7 +62,7 @@ public class SudokuControllerTest {
     }
 
     @Test
-    public void testInValidSudokuMove() throws Exception{
+    public void shouldTestInvalidateMove() throws Exception{
         SudokuMoveRequest request = new SudokuMoveRequest();
         request.setSudokuBoard(SudokuServiceImpl.SUDOKU_BOARD);
         request.setMoveColumn(1);
@@ -75,9 +76,9 @@ public class SudokuControllerTest {
     }
 
     @Test
-    public void testSudokuCompleteMove() throws Exception{
+    public void shouldValidateMoveCompletion() throws Exception{
         SudokuMoveRequest request = new SudokuMoveRequest();
-        request.setSudokuBoard(SudokuTestUtils.SUDOKU_FINISH);
+        request.setSudokuBoard(SudokuTestUtils.SUDOKU_ONE_MOVE_FINISH);
         request.setMoveColumn(0);
         request.setMoveRow(0);
         request.setMoveValue(5);
