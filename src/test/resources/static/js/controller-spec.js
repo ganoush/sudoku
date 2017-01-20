@@ -9,7 +9,7 @@ describe('controller', function () {
 
     var sudokuLoadResponse = {
         success: function (func) {
-            func({ sudokuBoard: [[1,0],[2,1]], validMove: true, sudokuComplete: true});
+            func([[1,0],[2,1]]);
         }
     };
 

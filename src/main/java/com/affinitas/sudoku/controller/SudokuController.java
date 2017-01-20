@@ -2,9 +2,6 @@ package com.affinitas.sudoku.controller;
 
 import com.affinitas.sudoku.dto.SudokuMove;
 import com.affinitas.sudoku.dto.ValidationResult;
-import com.affinitas.sudoku.dto.request.SudokuMoveRequest;
-import com.affinitas.sudoku.dto.response.SudokuLoadResponse;
-import com.affinitas.sudoku.dto.response.SudokuMoveResponse;
 import com.affinitas.sudoku.services.SudokuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -33,17 +30,11 @@ public class SudokuController {
      */
 
     @RequestMapping(value = "/loadBoard",  method = RequestMethod.GET)
-    public SudokuLoadResponse loadSudokuBoard(){
+    public int[][] loadSudokuBoard(){
         log.info("Request to load default sudoku board");
-
         int[][] loadResponse = sudokuServiceImpl.loadSudokuBoard();
-
-        //Set the response in the response object.
-        SudokuLoadResponse response = new SudokuLoadResponse();
-        response.setSudokuBoard(loadResponse);
-        log.info("Returning the default sudoku board " + response);
-
-        return response;
+        log.info("Returning the default sudoku board " + loadResponse);
+        return loadResponse;
     }
 
     /**
@@ -54,15 +45,12 @@ public class SudokuController {
      */
 
     @RequestMapping(value = "/validateMove",  method = RequestMethod.PUT)
-    public SudokuMoveResponse validateSudokuMove(@RequestBody SudokuMoveRequest request){
+    public ValidationResult validateSudokuMove(@RequestBody SudokuMove request){
         log.info("Request to validate Sudoku Move " + request);
 
         ValidationResult result = sudokuServiceImpl.validateMove(new SudokuMove(request.getSudokuBoard(),request.getMoveRow(), request.getMoveColumn(), request.getMoveValue()));
-        SudokuMoveResponse response = new SudokuMoveResponse();
-        response.setSudokuComplete(result.isSudokuComplete());
-        response.setValidMove(result.isValidMove());
-        response.setValidationMessages(result.getValidationMessages());
-        log.info("Response to validate Sudoku Move " + response);
-        return response;
+
+        log.info("Response to validate Sudoku Move " + result);
+        return result;
     }
 }
